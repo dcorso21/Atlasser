@@ -18,13 +18,24 @@ let data = {
                 },
             ],
         },
+        {
+            header: "Topic 2",
+            explanation: "Topic 2 Explanation",
+            topics: [
+                {
+                    header: "Topic 1 : A",
+                    explanation: "Topic 1 : A  Explanation",
+                    topics: [],
+                },
+            ],
+        },
     ],
 };
 
 function populate(data, container) {
     let header = document.createElement("h1");
-    let explanation = document.createElement("p");
     header.innerHTML = data.header;
+    let explanation = document.createElement("p");
     explanation.innerHTML = data.explanation;
     container.appendChild(header);
     container.appendChild(explanation);
