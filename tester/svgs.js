@@ -1,8 +1,8 @@
 let svg = d3
     .select("body")
     .append("svg")
-    .attr("height", "500vh")
-    .attr("width", "500vw");
+    .attr("height", "100vh")
+    .attr("width", "100vw");
 
 let circles = [];
 
@@ -24,7 +24,7 @@ function makeGrid() {
             .attr("x2", x2)
             .attr("y1", y1)
             .attr("y2", y2)
-            .attr("stroke", "black");
+            .attr("stroke", "rgba(0, 0, 0, .2)");
     }
 }
 
@@ -62,7 +62,7 @@ function placePath(obj1, obj2, svg) {
     // console.log({ qx1, qx2, qy1, qy2 });
     svg.append("path")
         .attr("d", `M ${x1} ${y1} Q ${qx1},${qy1} ${qx2},${qy2}  T ${x2} ${y2}`)
-        .attr("stroke", "blue")
+        .attr("stroke", "green")
         .attr("fill", "transparent");
 }
 
