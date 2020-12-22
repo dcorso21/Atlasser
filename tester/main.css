@@ -1,0 +1,22 @@
+.topic {
+    position: absolute;
+    background-color: rgb(206, 83, 83);
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.top {
+    transition: fill .4s;
+}
+
+.top:hover {
+    fill: orange;
+    cursor: pointer;
+}
+

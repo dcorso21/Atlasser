@@ -1,50 +1,30 @@
-const select = (el) => document.querySelector(el);
-const selectAll = (el) => document.querySelectorAll(el);
 
-let over = select(".over");
+var el = document.querySelector(".topic");
 
-let data = {
-    header: "World History",
-    explanation: "World History Explanation",
-    topics: [
-        {
-            header: "Topic 1",
-            explanation: "Topic 1 Explanation",
-            topics: [
-                {
-                    header: "Topic 1 : A",
-                    explanation: "Topic 1 : A  Explanation",
-                    topics: [],
-                },
-            ],
-        },
-        {
-            header: "Topic 2",
-            explanation: "Topic 2 Explanation",
-            topics: [
-                {
-                    header: "Topic 1 : A",
-                    explanation: "Topic 1 : A  Explanation",
-                    topics: [],
-                },
-            ],
-        },
-    ],
-};
+el.addEventListener("mousedown", mouseDown);
 
-function populate(data, container) {
-    let header = document.createElement("h1");
-    header.innerHTML = data.header;
-    let explanation = document.createElement("p");
-    explanation.innerHTML = data.explanation;
-    container.appendChild(header);
-    container.appendChild(explanation);
+function mouseDown(e) {
+    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mouseup", mouseUp);
 
-    data.topics.map((t) => {
-        container.appendChild(populate(t, document.createElement("div")));
-    });
+    let prevX = e.clientX;
+    let prevY = e.clientY;
 
-    return container;
+    function mouseMove(e) {
+        let newX = prevX - e.clientX,
+            newY = prevY - e.clientY;
+
+        const rect = el.getBoundingClientRect();
+
+        el.style.left = rect.left - newX + "px";
+        el.style.top = rect.top - newY + "px";
+
+        prevX = e.clientX;
+        prevY = e.clientY;
+    }
+
+    function mouseUp(e) {
+        window.removeEventListener('mousemove', mouseMove)
+        window.removeEventListener('mouseup', mouseUp)
+    }
 }
-
-populate(data, over);
