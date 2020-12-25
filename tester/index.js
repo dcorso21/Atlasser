@@ -13,10 +13,16 @@ let circles = {
         connectedIds: [],
     },
     cir3: {
-        cx: 450,
+        cx: 650,
         cy: 440,
         r: 45,
         connectedIds: [],
+    },
+    cir4: {
+        cx: 350,
+        cy: 440,
+        r: 79,
+        connectedIds: ["cir2", "cir3"],
     },
 };
 
