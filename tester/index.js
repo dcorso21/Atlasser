@@ -1,30 +1,31 @@
+let svg;
+let circles = {
+    cir1: {
+        cx: 150,
+        cy: 140,
+        r: 100,
+        connectedIds: ["cir2", "cir3"],
+    },
+    cir2: {
+        cx: 450,
+        cy: 440,
+        r: 45,
+        connectedIds: [],
+    },
+    cir3: {
+        cx: 450,
+        cy: 440,
+        r: 45,
+        connectedIds: [],
+    },
+};
 
-var el = document.querySelector(".topic");
+let strokeWidth = 5;
+let strokeColor = "white";
 
-el.addEventListener("mousedown", mouseDown);
-
-function mouseDown(e) {
-    window.addEventListener("mousemove", mouseMove);
-    window.addEventListener("mouseup", mouseUp);
-
-    let prevX = e.clientX;
-    let prevY = e.clientY;
-
-    function mouseMove(e) {
-        let newX = prevX - e.clientX,
-            newY = prevY - e.clientY;
-
-        const rect = el.getBoundingClientRect();
-
-        el.style.left = rect.left - newX + "px";
-        el.style.top = rect.top - newY + "px";
-
-        prevX = e.clientX;
-        prevY = e.clientY;
-    }
-
-    function mouseUp(e) {
-        window.removeEventListener('mousemove', mouseMove)
-        window.removeEventListener('mouseup', mouseUp)
-    }
-}
+window.onload = () => {
+    createSVG();
+    // makeGrid();
+    renderInteractive();
+    UI.enableDragElement();
+};
