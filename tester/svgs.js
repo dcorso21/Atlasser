@@ -2,7 +2,8 @@ let svg = d3
     .select("body")
     .append("svg")
     .attr("height", "100vh")
-    .attr("width", "100vw");
+    .attr("width", "100vw")
+    .attr("class", "wind");
 
 let circles = [];
 
@@ -13,7 +14,6 @@ function gattr(el, attr) {
 function makeGrid() {
     [...Array.from(Array(15).keys())].map((num) => {
         num *= 100;
-        console.log(num);
         makeLine(0, "100vw", num, num);
         makeLine(num, num, 0, "100vh");
     });
@@ -27,7 +27,6 @@ function makeGrid() {
             .attr("stroke", "rgba(0, 0, 0, .2)");
     }
 }
-
 
 function makeCircle(cx, cy, r) {
     circles.push(
@@ -44,25 +43,27 @@ function makeCircle(cx, cy, r) {
 
 function placePath(obj1, obj2, svg) {
     d3.select("path").remove();
+    d3.selectAll(".cubic").remove();
 
-    let x1, y1, x2, y2, xbend, ybend;
-    x1 = gattr(obj1, "cx");
-    y1 = gattr(obj1, "cy");
-    x2 = gattr(obj2, "cx");
-    y2 = gattr(obj2, "cy");
-    let qxi = Math.abs(x1 - x2) / 4,
-        qyi = Math.abs(y1 - y2) / 4;
-    let qx1 = Math.min(x1, x2) + qxi,
-        qx2 = Math.min(x1, x2) + qxi * 2,
-        qy1 = Math.min(y1, y2),
-        qy2 = Math.min(y1, y2) + qyi *2;
+    let x1 = gattr(obj1, "cx"),
+        y1 = gattr(obj1, "cy"),
+        x2 = gattr(obj2, "cx"),
+        y2 = gattr(obj2, "cy");
+
+    let zys = [y1, y2];
+    if (y1 <= y2) {
+       zys = zys.reverse();
+    }
+    let mx = (Number(x1) + Number(x2)) / 2;
+
     
-    [qy1, qy2] = [qy1, qy2].sort();
 
-    // console.log({ qx1, qx2, qy1, qy2 });
+    let x = `M ${x1} ${y1} C ${mx},${zys[0]} ${mx},${zys[1]} ${x2},${y2}`
+    console.log(x);
+
     svg.append("path")
-        .attr("d", `M ${x1} ${y1} Q ${qx1},${qy1} ${qx2},${qy2}  T ${x2} ${y2}`)
-        .attr("stroke", "green")
+        .attr("d", x)
+        .attr("stroke", "white")
         .attr("fill", "transparent");
 }
 
@@ -80,18 +81,22 @@ function mouseDown(e) {
     window.addEventListener("mousemove", mouseMove);
     window.addEventListener("mouseup", mouseUp);
 
+    // Mouse Position
     let prevX = e.clientX;
     let prevY = e.clientY;
 
+    let target = e.toElement;
+
     function mouseMove(e) {
+        // Delta
         let newX = prevX - e.clientX,
             newY = prevY - e.clientY;
 
-        let cx = e.toElement.getAttribute("cx");
-        let cy = e.toElement.getAttribute("cy");
+        let cx = target.getAttribute("cx");
+        let cy = target.getAttribute("cy");
 
-        e.toElement.setAttribute("cx", cx - newX);
-        e.toElement.setAttribute("cy", cy - newY);
+        target.setAttribute("cx", cx - newX);
+        target.setAttribute("cy", cy - newY);
 
         prevX = e.clientX;
         prevY = e.clientY;

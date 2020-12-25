@@ -1,6 +1,9 @@
 
 body {
     overflow: hidden;
+    box-sizing: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .topic {
@@ -24,5 +27,9 @@ body {
 .top:hover {
     fill: rgb(47, 165, 120);
     cursor: move;
+}
+
+.wind {
+    background-color: rgb(51, 51, 51);
 }
 
